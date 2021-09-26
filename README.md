@@ -11,8 +11,11 @@ To get react typescript redux:
 
 `npx create-react-app my-app --template redux-typescript`
 
+`npm install --save redux-devtools-extension`
+
 To get tailwind CSS (highly recommended) (start after create-react-app since we did that before):
 https://tailwindcss.com/docs/guides/create-react-app
+
 
 
 

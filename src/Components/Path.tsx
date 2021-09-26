@@ -1,6 +1,10 @@
+import Toolbar from './Toolbar';
+import Visualizer from './Visualizer';
+
 const Path = () => (
-    <div className="">
-        hello
+    <div className=" h-screen">
+        <Toolbar/>
+        <Visualizer/>
     </div>
 );
 
