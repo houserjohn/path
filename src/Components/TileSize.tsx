@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import store from '../store';
 import Button from './Button';
 
+import { addWarning } from "../SharedFunctions/SharedFunctions";
+
 // function is from https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number
 // only positive whole numbers are allowed
 function isNumeric(value: string) {
@@ -29,7 +31,7 @@ const TileSize = () => {
     }
 
     const onTileSizeUpdate = () => {
-        if (isPositiveWholeNumber(tileSize)) {
+        if (isPositiveWholeNumber(tileSize) && parseInt(tileSize) < 100) {
             // update the store
             
             store.dispatch({
@@ -40,6 +42,7 @@ const TileSize = () => {
             // return the rows and cols inputs back to their store values
             tileSizeInput.current!.value = tile_size.toString();
             
+            addWarning("Tile size must be smaller than 100. No negative numbers and non-numbers.")
         }
     }
 

@@ -5,7 +5,11 @@ const reducer = (
   state: {
     grid: any[],
     tile_size: number,
-
+    object_selected: string,
+    start_position: number,
+    end_position: number,
+    mouse_dragging: boolean,
+    warnings: string[]
   },
   action: { type: string; payload: any }
 ) => {
@@ -26,6 +30,46 @@ const reducer = (
         ...state,
         tile_size: action.payload,
       };
+    }
+
+    case "path/set_object_selected": {
+      // update the object selected (for placing)
+      return {
+        ...state,
+        object_selected: action.payload,
+      }
+    }
+
+    case "path/set_start_position": {
+      // set the start position of the algorithm
+      return {
+        ...state,
+        start_position: action.payload,
+      }
+    }
+
+    case "path/set_end_position": {
+      // set the end position of the algorithm
+      return {
+        ...state,
+        end_position: action.payload,
+      }
+    }
+
+    case "path/set_mouse_dragging": {
+      // set whether or not the mouse is currently dragging
+      return {
+        ...state,
+        mouse_dragging: action.payload,
+      }
+    }
+
+    case "path/set_warnings": {
+      // set the warnings that are shown to the user
+      return {
+        ...state,
+        warnings: action.payload
+      }
     }
 
     default:
@@ -51,6 +95,11 @@ const store = createStore(
         ["P", "P", "P", "P", "P", "P", "P", "P", "P", "P"],
     ], 
     tile_size: 10,
+    object_selected: "W",
+    start_position: -1,
+    end_position: -1,
+    mouse_dragging: false,
+    warnings: [],
   },
   composeWithDevTools()
 );

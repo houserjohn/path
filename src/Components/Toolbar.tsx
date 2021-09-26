@@ -3,6 +3,7 @@
 import GridSize from './GridSize';
 import TileSize from './TileSize';
 import ObjectSelector from './ObjectSelector';
+import AlgorithmSelector from './AlgorithmSelector';
 
 const Toolbar = () => {
     
@@ -13,6 +14,7 @@ const Toolbar = () => {
                 <GridSize/>
                 <TileSize/>
                 <ObjectSelector/>
+                <AlgorithmSelector/>                
             </div>
         </div>
     );

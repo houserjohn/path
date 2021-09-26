@@ -1,12 +1,13 @@
 import store from '../store';
 import { useSelector } from "react-redux";
-import { copy2D } from '../SharedFunctions/SharedFunctions';
+import { copy2D, parseRowColHash } from '../SharedFunctions/SharedFunctions';
 
-// W: wall, P: path, S: start, F: searched, E: End
+// W: wall, P: path, S: start, F: searched, E: End, A: answer path (solution)
 
 interface Redux_Store_Interface {
     grid: any[],
     tile_size: number,
+    object_selected: string,
 }
 
 interface Tile_Props {
@@ -16,19 +17,98 @@ interface Tile_Props {
     type: string,
 }
 
+document.body.onmousedown = () => { 
+  //console.log("mouse down")
+  store.dispatch({
+      type: "path/set_mouse_dragging",
+      payload: true,
+  });
+}
+
+document.body.onmouseup = () => { 
+  //console.log("mouse up")
+  store.dispatch({
+    type: "path/set_mouse_dragging",
+    payload: false,
+  })
+}
+
 const Tile = (props: Tile_Props) => {
     const grid: any[] = useSelector((state: Redux_Store_Interface) => state.grid);
     const tile_size: number = useSelector((state: Redux_Store_Interface) => state.tile_size);
+    const object_selected: string = useSelector((state: Redux_Store_Interface) => state.object_selected);
+
+    const placeNewTile = () => {
+        const new_grid: any[] = copy2D(grid);
+        new_grid[props.row][props.col] = object_selected;
+
+        if (grid[props.row][props.col] === "E") { // if overwriting end point then change end
+            store.dispatch({ // update the ending location
+                type: "path/set_end_position",
+                payload: -1,
+            }); 
+        } 
+
+        if (grid[props.row][props.col] === "S") { // if overwriting start point then change start
+            store.dispatch({ // update the starting location
+                type: "path/set_start_position",
+                payload: -1,
+            }); 
+        } 
+
+        switch(object_selected) {
+            case "S": 
+                const start_pos = store.getState().start_position;
+                if (start_pos !== -1) { // check if there was a previous starting location
+                    const {row, col} = parseRowColHash(start_pos, grid[0].length);
+                    new_grid[row][col] = "P"; // remove previous starting location
+                }    
+                store.dispatch({ // update the starting location
+                    type: "path/set_start_position",
+                    payload: (props.row*grid[0].length+props.col),
+                });            
+                store.dispatch({ // update the grid
+                    type: "path/set_grid",
+                    payload: new_grid,
+                });
+                break;
+            case "E":
+                const end_pos = store.getState().end_position;
+                if (end_pos !== -1) { // check if there was a previous starting location
+                    const {row, col} = parseRowColHash(end_pos, grid[0].length);
+                    new_grid[row][col] = "P"; // remove previous starting location
+                }    
+                store.dispatch({ // update the end location
+                    type: "path/set_end_position",
+                    payload: (props.row*grid[0].length+props.col),
+                });            
+                store.dispatch({ // update the grid
+                    type: "path/set_grid",
+                    payload: new_grid,
+                });
+                break;
+            default:
+                store.dispatch({
+                    type: "path/set_grid",
+                    payload: new_grid,
+                });
+        }
+
+  
+    }
+
+    const onTileHover = () => { // draw items if mouse is dragging over element
+        const mouseDragging = store.getState().mouse_dragging;
+        if (mouseDragging) {
+            placeNewTile();
+        }
+    }
 
     const onTileClick = () => {
-        console.log(props.row, props.col);
-        const new_grid: any[] = copy2D(grid);
-        new_grid[props.row][props.col] = "W";
-
-        store.dispatch({
-            type: "path/set_grid",
-            payload: new_grid,
-        });
+        //console.log(props.row, props.col);
+        //console.log(props.row*grid[0].length + props.col )
+        placeNewTile();
+      
     }
 
     const getTypeProperties = (type: string): string => {
@@ -43,13 +123,15 @@ const Tile = (props: Tile_Props) => {
                 return "bg-yellow-400"
             case "E":
                 return "bg-red-400"
+            case "A":
+                return "bg-blue-400"
             default:
                 return "bg-purple-900"
         }
     }
 
     return (
-        <div onClick={onTileClick} className={`w-${tile_size.toString()} h-${tile_size.toString()} ${getTypeProperties(props.type)} inline-block border cursor-pointer border-gray`} >
+        <div onMouseDown={onTileClick} onMouseEnter={onTileHover} className={`w-${tile_size.toString()} h-${tile_size.toString()} ${getTypeProperties(props.type)} inline-block border cursor-pointer border-gray`} >
                 <div className="flex justify-center items-center opacity-0 " style={{width: "100%", height: "100%"}}>
                     a
                 </div>

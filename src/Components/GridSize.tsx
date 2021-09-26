@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { useSelector } from "react-redux";
 import store from '../store';
 import Button from './Button';
-import { create2D } from '../SharedFunctions/SharedFunctions';
+import { create2D, addWarning } from '../SharedFunctions/SharedFunctions';
 
 interface Redux_Store_Interface {
     grid: any[]
@@ -51,6 +51,8 @@ const GridSize = () => {
             // return the rows and cols inputs back to their store values
             rowInput.current!.value = grid.length.toString();
             colInput.current!.value = grid[0].length.toString();
+
+            addWarning("Grid Size must be 99x99 or smaller. No negative values and non-numbers. ")
         }
     }
     
