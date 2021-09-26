@@ -18,8 +18,8 @@ const Visualizer = () => {
                     grid.map((tiles: any[], row: number) => (
                         <div key={row} className={`h-${tile_size}`}>
                             {
-                            tiles.map((tile: any, col: number) => (
-                                <Tile key={col}> hello </Tile>
+                            tiles.map((tile: string, col: number) => (
+                                <Tile row={row} col={col} key={col} type={tile}> h </Tile>
                             ))
                             }
                         </div>
