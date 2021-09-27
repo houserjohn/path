@@ -20,9 +20,13 @@ const copy2D = (old_grid: any[]): any[] => {
     return new_grid;
 } 
 
-const parseRowColHash = (hash: number, numCols: number): {row: number, col: number} => {
-    return {row: Math.floor(hash/numCols),col: hash%numCols};   
-}
+// returns [row, col] from a hashed row,col
+const parseRowColHash = (hash: number, numCols: number): number[] => (
+    [Math.floor(hash/numCols),hash%numCols]
+);
+
+// returns hashed row,col from row, col with numCols
+const hashRowCol = (row: number, col: number, numCols: number) : number => (row*numCols+col);
 
 const addWarning = (msg: string) => {
     const old_warnings: string[] = store.getState().warnings;
@@ -36,4 +40,4 @@ const addWarning = (msg: string) => {
     });
 }
 
-export { create2D, copy2D, parseRowColHash, addWarning }
+export { create2D, copy2D, parseRowColHash, hashRowCol, addWarning }

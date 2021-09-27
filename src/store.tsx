@@ -9,7 +9,8 @@ const reducer = (
     start_position: number,
     end_position: number,
     mouse_dragging: boolean,
-    warnings: string[]
+    warnings: string[],
+    current_algorithm: string,
   },
   action: { type: string; payload: any }
 ) => {
@@ -100,6 +101,7 @@ const store = createStore(
     end_position: -1,
     mouse_dragging: false,
     warnings: [],
+    current_algorithm: "BFS",
   },
   composeWithDevTools()
 );

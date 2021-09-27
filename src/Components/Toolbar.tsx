@@ -4,6 +4,7 @@ import GridSize from './GridSize';
 import TileSize from './TileSize';
 import ObjectSelector from './ObjectSelector';
 import AlgorithmSelector from './AlgorithmSelector';
+import Playback from "./Playback";
 
 const Toolbar = () => {
     
@@ -15,6 +16,7 @@ const Toolbar = () => {
                 <TileSize/>
                 <ObjectSelector/>
                 <AlgorithmSelector/>                
+                <Playback/>
             </div>
         </div>
     );

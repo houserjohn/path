@@ -60,7 +60,7 @@ const Tile = (props: Tile_Props) => {
             case "S": 
                 const start_pos = store.getState().start_position;
                 if (start_pos !== -1) { // check if there was a previous starting location
-                    const {row, col} = parseRowColHash(start_pos, grid[0].length);
+                    const [row, col] = parseRowColHash(start_pos, grid[0].length);
                     new_grid[row][col] = "P"; // remove previous starting location
                 }    
                 store.dispatch({ // update the starting location
@@ -75,7 +75,7 @@ const Tile = (props: Tile_Props) => {
             case "E":
                 const end_pos = store.getState().end_position;
                 if (end_pos !== -1) { // check if there was a previous starting location
-                    const {row, col} = parseRowColHash(end_pos, grid[0].length);
+                    const [row, col] = parseRowColHash(end_pos, grid[0].length);
                     new_grid[row][col] = "P"; // remove previous starting location
                 }    
                 store.dispatch({ // update the end location

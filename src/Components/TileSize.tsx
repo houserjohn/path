@@ -51,7 +51,7 @@ const TileSize = () => {
         <div className="inline-block">
             Tile Size:
             <input onChange={(e: any) => tileSizeChange(e)} ref={tileSizeInput} className="inline-block text-right w-6 mx-1 bg-gray-100" defaultValue={tile_size} />
-            <Button mods={"bg-gray-100"} onClick={onTileSizeUpdate}>Update</Button>
+            <Button mods={"bg-gray-100 hover:text-gray-600 hover:bg-gray-200 hover:border-gray-300"} onClick={onTileSizeUpdate}>Update</Button>
         </div>
     );
 }

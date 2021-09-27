@@ -64,7 +64,7 @@ const GridSize = () => {
             <input onChange={(e: any) => rowSizeChange(e)} ref={rowInput} className="inline-block text-right w-6 mx-1 bg-gray-100" defaultValue={grid.length} />
             x
             <input onChange={(e: any) => colSizeChange(e)} ref={colInput} className="inline-block text-right w-6 mx-1 bg-gray-100" defaultValue={grid[0].length}/>
-            <Button mods={"bg-gray-100"} onClick={onGridUpdate}>Update</Button>
+            <Button mods={"bg-gray-100 hover:text-gray-600 hover:bg-gray-200 hover:border-gray-300"} onClick={onGridUpdate}>Update</Button>
         </div>
     );
 }
