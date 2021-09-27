@@ -11,6 +11,9 @@ const reducer = (
     mouse_dragging: boolean,
     warnings: string[],
     current_algorithm: string,
+    animation_speed: number,
+    animation_in_progress: boolean,
+    animation_paused: boolean,
   },
   action: { type: string; payload: any }
 ) => {
@@ -69,7 +72,31 @@ const reducer = (
       // set the warnings that are shown to the user
       return {
         ...state,
-        warnings: action.payload
+        warnings: action.payload,
+      }
+    }
+
+    case "path/set_animation_speed": {
+      // set the animation speed of the playback of the path finding algorithm
+      return {
+        ...state,
+        animation_speed: action.payload,
+      }
+    }
+
+    case "path/set_animation_paused": {
+      // set whether or not the animation has been paused
+      return {
+        ...state,
+        animation_paused: action.payload,
+      }
+    }
+
+    case "path/set_animation_in_progress": {
+      // set animation in progress
+      return {
+        ...state,
+        animation_in_progress: action.payload,
       }
     }
 
@@ -102,6 +129,9 @@ const store = createStore(
     mouse_dragging: false,
     warnings: [],
     current_algorithm: "BFS",
+    animation_speed: 1000,
+    animation_in_progress: false,
+    animation_paused: false,
   },
   composeWithDevTools()
 );
