@@ -2,9 +2,8 @@
 class Queue {
     elements: any[]
 
-    constructor(initElements?: any[]) {
-        this.elements = [];
-        if (initElements) this.elements = initElements;
+    constructor(initElements: any[]) {
+        this.elements = initElements;
     }
 
     enqueue(item: any) {
@@ -12,7 +11,7 @@ class Queue {
     }
 
     dequeue() {
-        return this.elements.shift();        
+        if (!this.isEmpty()) return this.elements.shift();        
     }
 
     isEmpty() {

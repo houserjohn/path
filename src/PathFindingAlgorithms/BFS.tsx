@@ -3,6 +3,7 @@
 // This way, we can pause, rewind, and change the speed of the playback easily.
 
 import Queue from "../DataStructures/Queue";
+import Stack from "../DataStructures/Stack";
 
 import { parseRowColHash, hashRowCol, copy2D } from "../SharedFunctions/SharedFunctions";
 
@@ -13,10 +14,10 @@ const BFS = (grid: any[], start: number, end: number): any[] => {
     const numCols = grid[0].length;
     const numRows = grid.length;
 
-    let new_grid = copy2D(grid); // new_grid for keeping track of values changed for the recorder
+    let new_grid = copy2D(grid); // new_grid for keeping track of values changed for the recorder (old recorder)
     let visited: {[key: string] : boolean } = {} 
     let queue = new Queue([start]) 
-    let path: any[] = [];
+    let path = new Stack([]);
     let recorder: any[] = [];
     let pathFound = false;
 
@@ -35,8 +36,9 @@ const BFS = (grid: any[], start: number, end: number): any[] => {
         // record the visit
         const [ row, col ] = parseRowColHash(node, numCols);
         //console.log(`${node}: row ${row} col ${col}`);
-        recorder.push([node, new_grid[row][col], "F"])
-        new_grid[row][col] = "F";
+        //recorder.push([node, new_grid[row][col], "F"]) // maybe use this in order to determine which animation to be played
+        if (new_grid[row][col] !== "S") new_grid[row][col] = "F";
+        recorder.push(copy2D(new_grid));
 
         // get neighbors
         const neighbors: number[][] = [[row-1, col],[row,col+1],[row+1,col],[row,col-1]];
@@ -56,6 +58,9 @@ const BFS = (grid: any[], start: number, end: number): any[] => {
             }
         }
     }
+
+    //for (let i = 0; i < path.length(); i++) {
+    //}
     
     return recorder; // (pathFound ? path : []);
 }

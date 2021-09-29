@@ -39,6 +39,8 @@ const Tile = (props: Tile_Props) => {
     const object_selected: string = useSelector((state: Redux_Store_Interface) => state.object_selected);
 
     const placeNewTile = () => {
+        if (store.getState().animation_in_progress) return; // can't draw while the animation is being played
+
         const new_grid: any[] = copy2D(grid);
         new_grid[props.row][props.col] = object_selected;
 
@@ -131,10 +133,9 @@ const Tile = (props: Tile_Props) => {
     }
 
     return (
-        <div onMouseDown={onTileClick} onMouseEnter={onTileHover} className={`w-${tile_size.toString()} h-${tile_size.toString()} ${getTypeProperties(props.type)} inline-block border cursor-pointer border-gray`} >
-                <div className="flex justify-center items-center opacity-0 " style={{width: "100%", height: "100%"}}>
-                    a
-                </div>
+        <div onMouseDown={onTileClick} onMouseEnter={onTileHover} className={`w-${tile_size.toString()} h-${tile_size.toString()} inline-block z-10 border cursor-pointer border-gray`} >
+            <div className={` ${getTypeProperties(props.type)} w-full h-full z-20 `} >
+            </div>
         </div>
     );
 };

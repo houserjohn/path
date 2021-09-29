@@ -14,6 +14,8 @@ const reducer = (
     animation_speed: number,
     animation_in_progress: boolean,
     animation_paused: boolean,
+    frame: number,
+    end_frame: number,
   },
   action: { type: string; payload: any }
 ) => {
@@ -100,6 +102,22 @@ const reducer = (
       }
     }
 
+    case "path/set_frame": {
+      // set which frame you are in on the animation
+      return {
+        ...state,
+        frame: action.payload
+      }
+    }
+
+    case "path/set_end_frame": {
+      // set the end frame of the animation
+      return {
+        ...state,
+        end_frame: action.payload,
+      }
+    }
+
     default:
       // If this reducer doesn't recognize the action type, or doesn't
       // care about this specific action, return the existing state unchanged
@@ -132,6 +150,8 @@ const store = createStore(
     animation_speed: 1000,
     animation_in_progress: false,
     animation_paused: false,
+    frame: 0,
+    end_frame: 0,
   },
   composeWithDevTools()
 );
