@@ -118,6 +118,14 @@ const reducer = (
       }
     }
 
+    case "path/set_current_algorithm": {
+      // sets the current algorithm that is used in the animation
+      return {
+        ...state,
+        current_algorithm: action.payload,
+      }
+    }
+
     default:
       // If this reducer doesn't recognize the action type, or doesn't
       // care about this specific action, return the existing state unchanged

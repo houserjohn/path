@@ -1,9 +1,12 @@
-
+import store from '../store';
 
 const AlgorithmSelector = () => {
 
     const onAlgorithmSelectionChange = (e: any) => {
-        console.log(e.target.value)
+        store.dispatch({
+            type: "path/set_current_algorithm",
+            payload: e.target.value,
+        });        
     }
 
     return (

@@ -1,4 +1,5 @@
 import BFS from "../PathFindingAlgorithms/BFS";
+import DFS from "../PathFindingAlgorithms/DFS";
 import { useSelector } from "react-redux";
 import React, { useState } from 'react';
 import { addWarning, parseRowColHash, copy2D } from '../SharedFunctions/SharedFunctions';
@@ -95,9 +96,15 @@ const Playback = () => {
             });
 
             let recorder: any[];
-            switch(store.getState().current_algorithm) {
+            switch(store.getState().current_algorithm as any) {
                 case "BFS":
                     recorder = BFS(grid, startPosition, endPosition);
+                    break;
+                case "DFS":
+                    recorder = DFS(grid, startPosition, endPosition);
+                    break;
+                default: 
+                    return
             }
 
             setRecorder(recorder);
